@@ -2,6 +2,7 @@ package com.backend.technical.modals;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "jobs")
@@ -16,8 +17,8 @@ public class Job {
     @Column(nullable = false)
     private int salary;
 
-    @OneToMany
-    private List<Person> employees;
+    @ManyToMany
+    private Set<Person> employees;
 
     //Constructor
     public Job(){}
@@ -27,7 +28,7 @@ public class Job {
         this.salary = salary;
     }
 
-    public Job(long id, String jobTitle, int salary, List<Person> employees) {
+    public Job(long id, String jobTitle, int salary, Set<Person> employees) {
         this.id = id;
         this.jobTitle = jobTitle;
         this.salary = salary;
@@ -59,11 +60,25 @@ public class Job {
         this.salary = salary;
     }
 
-    public List<Person> getEmployees() {
+    public Set<Person> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(List<Person> employees) {
+    public void setEmployees(Set<Person> employees) {
         this.employees = employees;
+    }
+
+    //Many-To-Many Relationship Methods
+
+    //Adding Person to Job
+    public void addPersonToJob(Person person){
+        this.employees.add(person);
+        person.getJobs().add(this);
+    }
+
+    //Removing Person from Job
+    public void removePersonFromJob(Person person){
+        this.employees.remove(person);
+        person.getJobs().remove(this);
     }
 }
