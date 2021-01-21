@@ -17,15 +17,16 @@ public class Job {
     @Column(nullable = false)
     private int salary;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "jobs", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Person> employees;
 
     //Constructor
     public Job(){}
 
-    public Job(String jobTitle, int salary) {
+    public Job(String jobTitle, int salary, Set<Person> employees) {
         this.jobTitle = jobTitle;
         this.salary = salary;
+        this.employees = employees;
     }
 
     public Job(long id, String jobTitle, int salary, Set<Person> employees) {

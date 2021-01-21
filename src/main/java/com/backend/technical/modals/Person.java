@@ -25,10 +25,10 @@ public class Person {
     @Column(length = 25)
     private String updateTime;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "employee_jobs",
-            joinColumns = {@JoinColumn(name = "person_id")},
+            joinColumns = {@JoinColumn(name = "emp_id")},
             inverseJoinColumns = {@JoinColumn(name = "job_id")}
     )
     private Set<Job> jobs;
