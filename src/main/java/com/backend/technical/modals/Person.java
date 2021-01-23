@@ -23,7 +23,7 @@ public class Person {
     private Date dateJoined;
 
     @Column(length = 25)
-    private String updateTime;
+    private String dateUpdated;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
@@ -43,12 +43,12 @@ public class Person {
     }
 
     //Read
-    public Person(long id, String name, short age, Date dateJoined, String updateTime, Set<Job> jobs) {
+    public Person(long id, String name, short age, Date dateJoined, String dateUpdated, Set<Job> jobs) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.dateJoined = dateJoined;
-        this.updateTime = updateTime;
+        this.dateUpdated = dateUpdated;
         this.jobs = jobs;
     }
 
@@ -85,12 +85,12 @@ public class Person {
         this.dateJoined = dateJoined;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getDateUpdated() {
+        return dateUpdated;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setDateUpdated(String dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 
     public Set<Job> getJobs() {return jobs;}

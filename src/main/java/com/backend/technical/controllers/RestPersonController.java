@@ -2,10 +2,7 @@ package com.backend.technical.controllers;
 
 import com.backend.technical.modals.Person;
 import com.backend.technical.repos.PersonRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,8 +14,8 @@ public class RestPersonController {
         this.personDao = personDao;
     }
 
-    @PostMapping("/persons")
-    public List<Person> viewPeople () {
-        return personDao.findAll();
-    }
+   @RequestMapping(value = "/person/{id}", method = RequestMethod.GET, produces = {"application/json", "application/xml"})
+    public Person findPerson(@PathVariable long id){
+        return personDao.getOne(id);
+   }
 }
