@@ -11,5 +11,4 @@ public interface PersonRepository extends JpaRepository <Person, Long> {
     List<Person> findAllByName(String personName);
     List<Person> findAllByAge(short age);
     List<Person> findAllByDateJoined(Date dateJoined);
-    Person remove(String id);
 }

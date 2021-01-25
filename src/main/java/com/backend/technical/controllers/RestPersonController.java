@@ -50,7 +50,6 @@ public class RestPersonController {
     //delete person
     @RequestMapping(value = "/person/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deletePerson(@PathVariable("id") String id) {
-        //personDao.remove(id);
         personDao.deleteById(parseLong(id));
         return new ResponseEntity<>("Person has been deleted successfully", HttpStatus.OK);
     }
