@@ -25,13 +25,16 @@ public class Person {
     @Column(length = 25)
     private String dateUpdated;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(
-            name = "employee_jobs",
-            joinColumns = {@JoinColumn(name = "emp_id")},
-            inverseJoinColumns = {@JoinColumn(name = "job_id")}
-    )
-    private Set<Job> jobs;
+    @ManyToOne
+    private Job job;
+
+//    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    @JoinTable(
+//            name = "employee_jobs",
+//            joinColumns = {@JoinColumn(name = "emp_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "job_id")}
+//    )
+//    private Set<Job> jobs;
 
     //Constructors
     public Person() {}
@@ -43,13 +46,13 @@ public class Person {
     }
 
     //Read
-    public Person(long id, String name, short age, Date dateJoined, String dateUpdated, Set<Job> jobs) {
+    public Person(long id, String name, short age, Date dateJoined, String dateUpdated, Job job) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.dateJoined = dateJoined;
         this.dateUpdated = dateUpdated;
-        this.jobs = jobs;
+        this.job = job;
     }
 
     //Getters and Setters
@@ -93,21 +96,31 @@ public class Person {
         this.dateUpdated = dateUpdated;
     }
 
-    public Set<Job> getJobs() {return jobs;}
+    public Job getJob() {return job;}
 
-    public void setJobs(Set<Job> jobs){this.jobs = jobs;}
+    public void setJob(Job job){this.job = job;}
 
-    //Many-To-Many Methods
-
-    //Adding a Job to a Person
-    public void addJobToPerson(Job job){
-        this.jobs.add(job);
-        job.getEmployees().add(this);
+    @Override
+    public String toString(){
+        return "Person{" +
+                "id = " + id +
+                ", name = '" + name + '\'' +
+                ", age = '" + age + '\'' +
+                ", dateJoined = '" + dateJoined + '\'' +
+                ", dateUpdated = '" + dateUpdated + '\'' +
+                '}';
     }
 
-    //Removing a Job from a Person
-    public void removeJobFromPerson(Job job){
-        this.jobs.remove(job);
-        job.getEmployees().remove(this);
-    }
+//    //Many-To-Many Methods
+//    //Adding a Job to a Person
+//    public void addJobToPerson(Job job){
+//        this.jobs.add(job);
+//        job.getEmployees().add(this);
+//    }
+//
+//    //Removing a Job from a Person
+//    public void removeJobFromPerson(Job job){
+//        this.jobs.remove(job);
+//        job.getEmployees().remove(this);
+//    }
 }

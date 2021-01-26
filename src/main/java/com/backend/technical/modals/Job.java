@@ -17,19 +17,22 @@ public class Job {
     @Column(nullable = false)
     private int salary;
 
-    @ManyToMany(mappedBy = "jobs", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private Set<Person> employees;
+    @OneToMany
+    private List<Person> employees;
+
+//    @ManyToMany(mappedBy = "jobs", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    private Set<Person> employees;
 
     //Constructor
     public Job(){}
 
-    public Job(String jobTitle, int salary, Set<Person> employees) {
+    public Job(String jobTitle, int salary, List<Person> employees) {
         this.jobTitle = jobTitle;
         this.salary = salary;
         this.employees = employees;
     }
 
-    public Job(long id, String jobTitle, int salary, Set<Person> employees) {
+    public Job(long id, String jobTitle, int salary, List<Person> employees) {
         this.id = id;
         this.jobTitle = jobTitle;
         this.salary = salary;
@@ -61,25 +64,24 @@ public class Job {
         this.salary = salary;
     }
 
-    public Set<Person> getEmployees() {
+    public List<Person> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Set<Person> employees) {
+    public void setEmployees(List<Person> employees) {
         this.employees = employees;
     }
 
-    //Many-To-Many Relationship Methods
-
-    //Adding Person to Job
-    public void addPersonToJob(Person person){
-        this.employees.add(person);
-        person.getJobs().add(this);
-    }
-
-    //Removing Person from Job
-    public void removePersonFromJob(Person person){
-        this.employees.remove(person);
-        person.getJobs().remove(this);
-    }
+//    //Many-To-Many Relationship Methods
+//    //Adding Person to Job
+//    public void addPersonToJob(Person person){
+//        this.employees.add(person);
+//        person.getJobs().add(this);
+//    }
+//
+//    //Removing Person from Job
+//    public void removePersonFromJob(Person person){
+//        this.employees.remove(person);
+//        person.getJobs().remove(this);
+//    }
 }
