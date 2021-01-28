@@ -2,6 +2,7 @@ package com.backend.technical.controllers;
 
 import com.backend.technical.modals.Job;
 import com.backend.technical.repos.JobRepository;
+import com.backend.technical.repos.PersonRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,11 @@ import static java.lang.Long.parseLong;
 @RequestMapping(value = "/api/jobs")
 public class RestJobController {
     private JobRepository jobDao;
+    private PersonRepository personDao;
 
-    public RestJobController (JobRepository jobDao){
+    public RestJobController (JobRepository jobDao, PersonRepository personDao){
         this.jobDao = jobDao;
+        this.personDao = personDao;
     }
 
     //Finding all jobs
