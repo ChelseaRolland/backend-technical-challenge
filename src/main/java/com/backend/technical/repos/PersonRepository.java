@@ -1,5 +1,6 @@
 package com.backend.technical.repos;
 
+import com.backend.technical.modals.Job;
 import com.backend.technical.modals.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +12,5 @@ public interface PersonRepository extends JpaRepository <Person, Long> {
     List<Person> findAllByName(String personName);
     List<Person> findAllByAge(short age);
     List<Person> findAllByDateJoined(Date dateJoined);
+    List<Person> findAllByJob(Job job);
 }
