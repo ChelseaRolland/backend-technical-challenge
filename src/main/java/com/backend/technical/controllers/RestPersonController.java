@@ -1,6 +1,8 @@
 package com.backend.technical.controllers;
 
+import com.backend.technical.modals.Job;
 import com.backend.technical.modals.Person;
+import com.backend.technical.repos.JobRepository;
 import com.backend.technical.repos.PersonRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,11 @@ import static java.lang.Long.parseLong;
 @RequestMapping(value = "/api/persons")
 public class RestPersonController {
     private PersonRepository personDao;
+    private JobRepository jobDao;
 
-    public RestPersonController (PersonRepository personDao){
+    public RestPersonController (PersonRepository personDao, JobRepository jobDao){
         this.personDao = personDao;
+        this.jobDao = jobDao;
     }
 
     //Finding all people
@@ -28,7 +32,10 @@ public class RestPersonController {
 
     //add 1 person
     @RequestMapping(value = "/persons", method = RequestMethod.POST)
-    public ResponseEntity<Object> addPerson(@RequestBody Person person){
+    public ResponseEntity<Object> addPerson(@RequestBody Person person, @RequestBody Job job){
+        if (person.getJob() == null){
+            person.setJob(job);
+        }
         personDao.save(person);
         return new ResponseEntity<>("Person is created successfully", HttpStatus.CREATED);
     }
@@ -41,8 +48,11 @@ public class RestPersonController {
 
     //update person
     @RequestMapping(value = "/person/{id}", method = RequestMethod.PATCH)
-    public ResponseEntity<Object> updatePerson(@PathVariable("id") String id, @RequestBody Person person){
+    public ResponseEntity<Object> updatePerson(@PathVariable("id") String id, @RequestBody Person person, @RequestBody Job job){
         person.setId(parseLong(id));
+        if (person.getJob() == null){
+            person.setJob(job);
+        }
         personDao.save(person);
         return new ResponseEntity<>("Person was updated successfully", HttpStatus.OK);
     }
