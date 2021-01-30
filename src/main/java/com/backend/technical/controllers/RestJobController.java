@@ -56,4 +56,11 @@ public class RestJobController {
         jobDao.deleteById(parseLong(id));
         return new ResponseEntity<>("Job has been deleted successfully", HttpStatus.OK);
     }
+
+    //finding all employees under 1 job title
+    @RequestMapping(value = "/job/{id}/employees", method = RequestMethod.GET)
+    public ResponseEntity<Object> showEmployees(@PathVariable("id") String id){
+        Job jobById = jobDao.findById(parseLong(id));
+        return new ResponseEntity<>(personDao.findAllByJob(jobById), HttpStatus.OK);
+    }
 }
