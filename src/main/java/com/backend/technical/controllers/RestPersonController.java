@@ -13,7 +13,7 @@ import java.util.List;
 import static java.lang.Long.parseLong;
 
 @RestController
-@RequestMapping(value = "/api/persons")
+@RequestMapping(value = "/api/persons/")
 public class RestPersonController {
     private PersonRepository personDao;
     private JobRepository jobDao;
@@ -24,7 +24,7 @@ public class RestPersonController {
     }
 
     //Finding all people
-    @GetMapping
+    @GetMapping("/getpeople")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Person>> listAllPeople(){
         return new ResponseEntity<>(personDao.findAll(), HttpStatus.OK);
@@ -33,8 +33,11 @@ public class RestPersonController {
     //add 1 person
     @RequestMapping(value = "/persons", method = RequestMethod.POST)
     public ResponseEntity<Object> addPerson(@RequestBody Person person, @RequestBody Job job){
+        Job jobDB = jobDao.findById(job.getId());
         if (person.getJob() == null){
             person.setJob(job);
+        }else {
+            person.setJob(jobDB);
         }
         personDao.save(person);
         return new ResponseEntity<>("Person is created successfully", HttpStatus.CREATED);
@@ -49,9 +52,12 @@ public class RestPersonController {
     //update person
     @RequestMapping(value = "/person/{id}", method = RequestMethod.PATCH)
     public ResponseEntity<Object> updatePerson(@PathVariable("id") String id, @RequestBody Person person, @RequestBody Job job){
+        Job jobDB = jobDao.findById(job.getId());
         person.setId(parseLong(id));
         if (person.getJob() == null){
             person.setJob(job);
+        }else {
+            person.setJob(jobDB);
         }
         personDao.save(person);
         return new ResponseEntity<>("Person was updated successfully", HttpStatus.OK);
