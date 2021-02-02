@@ -12,7 +12,7 @@ import java.util.List;
 import static java.lang.Long.parseLong;
 
 @RestController
-@RequestMapping(value = "/api/jobs")
+@RequestMapping(value = "/api/jobs/")
 public class RestJobController {
     private JobRepository jobDao;
     private PersonRepository personDao;
@@ -23,14 +23,14 @@ public class RestJobController {
     }
 
     //Finding all jobs
-    @GetMapping
+    @GetMapping("/jobs")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Job>> listAllJobs(){
         return new ResponseEntity<>(jobDao.findAll(), HttpStatus.OK);
     }
 
     //Adding 1 job & Updating the jobs
-    @RequestMapping(value = "/jobs", method = RequestMethod.POST)
+    @RequestMapping(value = "/jobs/create", method = RequestMethod.POST)
     public ResponseEntity<Object> addJob(@RequestBody Job job){
         Job jobDB = jobDao.findById(job.getId());
         if (jobDB == null) {

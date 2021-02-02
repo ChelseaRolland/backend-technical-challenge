@@ -13,7 +13,7 @@ import java.util.List;
 import static java.lang.Long.parseLong;
 
 @RestController
-@RequestMapping(value = "/api/persons")
+@RequestMapping(value = "/api/persons/")
 public class RestPersonController {
     private PersonRepository personDao;
     private JobRepository jobDao;
@@ -24,7 +24,7 @@ public class RestPersonController {
     }
 
     //Finding all people
-    @GetMapping
+    @GetMapping("/getpeople")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Person>> listAllPeople(){
         return new ResponseEntity<>(personDao.findAll(), HttpStatus.OK);
