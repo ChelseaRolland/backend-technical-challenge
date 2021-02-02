@@ -13,4 +13,5 @@ public interface PersonRepository extends JpaRepository <Person, Long> {
     List<Person> findAllByAge(short age);
     List<Person> findAllByDateJoined(Date dateJoined);
     List<Person> findAllByJob(Job job);
+    Person findPersonByNameAndAge(String name, short age);
 }

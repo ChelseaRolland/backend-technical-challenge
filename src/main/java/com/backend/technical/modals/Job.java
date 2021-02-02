@@ -1,5 +1,7 @@
 package com.backend.technical.modals;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "jobs")
 public class Job {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -64,6 +67,7 @@ public class Job {
         this.salary = salary;
     }
 
+    @JsonIgnore
     public List<Person> getEmployees() {
         return employees;
     }

@@ -1,5 +1,7 @@
 package com.backend.technical.modals;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name = "persons")
 public class Person {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
