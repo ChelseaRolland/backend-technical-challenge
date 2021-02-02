@@ -33,8 +33,11 @@ public class RestPersonController {
     //add 1 person
     @RequestMapping(value = "/persons", method = RequestMethod.POST)
     public ResponseEntity<Object> addPerson(@RequestBody Person person, @RequestBody Job job){
+        Job jobDB = jobDao.findById(job.getId());
         if (person.getJob() == null){
             person.setJob(job);
+        }else {
+            person.setJob(jobDB);
         }
         personDao.save(person);
         return new ResponseEntity<>("Person is created successfully", HttpStatus.CREATED);
@@ -49,9 +52,12 @@ public class RestPersonController {
     //update person
     @RequestMapping(value = "/person/{id}", method = RequestMethod.PATCH)
     public ResponseEntity<Object> updatePerson(@PathVariable("id") String id, @RequestBody Person person, @RequestBody Job job){
+        Job jobDB = jobDao.findById(job.getId());
         person.setId(parseLong(id));
         if (person.getJob() == null){
             person.setJob(job);
+        }else {
+            person.setJob(jobDB);
         }
         personDao.save(person);
         return new ResponseEntity<>("Person was updated successfully", HttpStatus.OK);

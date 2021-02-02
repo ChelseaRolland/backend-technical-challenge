@@ -29,11 +29,18 @@ public class RestJobController {
         return new ResponseEntity<>(jobDao.findAll(), HttpStatus.OK);
     }
 
-    //Adding 1 job
+    //Adding 1 job & Updating the jobs
     @RequestMapping(value = "/jobs", method = RequestMethod.POST)
     public ResponseEntity<Object> addJob(@RequestBody Job job){
-        jobDao.save(job);
-        return new ResponseEntity<>("Job was created successfully", HttpStatus.CREATED);
+        Job jobDB = jobDao.findById(job.getId());
+        if (jobDB == null) {
+            jobDao.save(job);
+            return new ResponseEntity<>("Job was created successfully", HttpStatus.CREATED);
+        } else {
+            jobDao.save(jobDB);
+            return new ResponseEntity<>("Job was updated successfully", HttpStatus.OK);
+        }
+
     }
 
     //Find 1 job via id
@@ -43,12 +50,12 @@ public class RestJobController {
     }
 
     //update Job
-    @RequestMapping(value = "/job/{id}", method = RequestMethod.PATCH)
-    public ResponseEntity<Object> updatePerson(@PathVariable("id") String id, @RequestBody Job job){
-        job.setId(parseLong(id));
-        jobDao.save(job);
-        return new ResponseEntity<>("Job was updated successfully", HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/job/{id}", method = RequestMethod.PATCH)
+//    public ResponseEntity<Object> updatePerson(@PathVariable("id") String id, @RequestBody Job job){
+//        job.setId(parseLong(id));
+//        jobDao.save(job);
+//        return new ResponseEntity<>("Job was updated successfully", HttpStatus.OK);
+//    }
 
     //delete job
     @RequestMapping(value = "/job/{id}", method = RequestMethod.DELETE)
